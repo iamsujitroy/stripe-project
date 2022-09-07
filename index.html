@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        #product {
+            width: 250px;
+            background: #80008012;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="product">
+        <img src="./img/sweets.jpg">
+        <h2>Sweets</h2>
+        <p>Price : 200rs</p>
+        <button id="buy-now">Buy Now</button>
+    </div>
+</body>
+<script>
+    console.log(document.getElementById('product'));
+    var stripe = Stripe('pk_test_51LezXySAf8YaTgZujZVmOneq9Gc7jHYaGlp5BUmMKVn564unDJdxWgkTOj1Y6FlHw8byjKpwgmDDAtBTH3B7h1cZ00czXsnhmH');
+
+    document.getElementById('buy-now').addEventListener('click', function () {
+        stripe.redirectToCheckout({
+            lineItems: [
+                {
+                    price: 'price_1LezjZSAf8YaTgZucejKsSRI',
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            successUrl: 'http://localhost:5500//pages/success.html',
+            cancelUrl: 'http://localhost:5500/pages/cancel.html',
+        }).then(function (result) {
+            alert(result)
+        });
+    })
+</script>
+
+</html>
